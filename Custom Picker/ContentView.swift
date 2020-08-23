@@ -13,8 +13,10 @@ struct ContentView: View, CustomPicker {
     @State private var foodArray = ["Apple","Mangoes","Corn","Bread", "Watermelon","Banana","Tee-Shirts"]
     @State private var food = ""
     @State private var country = ""
+    @StateObject private var countriesVM = CountryViewModel()
 
     @State private var presentPicker = false
+    @State private var tag: Int = 1
 
     var body: some View {
         ZStack {
@@ -24,9 +26,10 @@ struct ContentView: View, CustomPicker {
                             .edgesIgnoringSafeArea(.all)
                         VStack {
                             Spacer()
-                            CustomPickerTextView(presentPicker: $presentPicker, fieldString: $food, placeholder: "Select a food item")
+                            CustomPickerTextView(presentPicker: $presentPicker, fieldString: $food, placeholder: "Select a food item", tag: $tag, selectedTag: 1)
 
-                            TextField("Select Country", text: $country)
+                            CustomPickerTextView(presentPicker: $presentPicker, fieldString: $country, placeholder: "Select a country", tag: $tag, selectedTag: 2)
+                            
                             Image("Working")
                                 .resizable()
                                 .frame(width: 400)
@@ -39,10 +42,18 @@ struct ContentView: View, CustomPicker {
                     }
             }
             if presentPicker {
-                CustomPickerView(items: foodArray.sorted(),
-                                 pickerField: $food,
-                                 presentPicker: $presentPicker, saveUpdate: saveUpdate)
-                    .zIndex(/*@START_MENU_TOKEN@*/1.0/*@END_MENU_TOKEN@*/)
+                if tag == 1 {
+                    CustomPickerView(items: foodArray.sorted(),
+                                     pickerField: $food,
+                                     presentPicker: $presentPicker, saveUpdate: saveUpdate)
+                        .zIndex(/*@START_MENU_TOKEN@*/1.0/*@END_MENU_TOKEN@*/)
+                } else {
+                    CustomPickerView(items: countriesVM.countryNamesArray,
+                                     pickerField: $country,
+                                     presentPicker: $presentPicker)
+                        .zIndex(/*@START_MENU_TOKEN@*/1.0/*@END_MENU_TOKEN@*/)
+                }
+
             }
         }
     }

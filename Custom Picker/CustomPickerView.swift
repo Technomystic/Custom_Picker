@@ -91,7 +91,7 @@ struct CustomPickerView: View {
                 .frame(maxWidth: 400)
                 .padding(.horizontal, 10)
                 .frame(height: frameHeight)
-                .padding(.top,20)
+                .padding(.top,40)
                 Spacer()
             }
         }

@@ -11,10 +11,13 @@ struct CustomPickerTextView: View {
     @Binding var presentPicker: Bool
     @Binding var fieldString : String
     var placeholder: String
+    @Binding var tag: Int
+    var selectedTag: Int
     var body: some View {
         TextField(placeholder, text: $fieldString).disabled(true)
             .overlay(
                 Button(action: {
+                    tag = selectedTag
                     withAnimation {
                         presentPicker = true
                     }
@@ -22,11 +25,5 @@ struct CustomPickerTextView: View {
                     Rectangle().foregroundColor(Color.clear)
                 }
             )
-    }
-}
-
-struct CustomPickerTextView_Previews: PreviewProvider {
-    static var previews: some View {
-        CustomPickerTextView(presentPicker: .constant(false), fieldString: .constant(""), placeholder: "")
     }
 }
